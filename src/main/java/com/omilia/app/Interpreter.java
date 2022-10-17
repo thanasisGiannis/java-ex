@@ -12,7 +12,7 @@ public class Interpreter
   private String[] sliceInput(String inputS){
     // chop input string into valid length substrings 
     // using space as seperation rule
-    
+    if(inputS == null) return null;
     String[] numbersStringArray = null;
     numbersStringArray = inputS.split(" ");
     
@@ -20,6 +20,9 @@ public class Interpreter
       // ToDo: Check for non number related characters
       // and discard them
       if(number.length() > 3 || number.length()<1) return null;
+      for(int i=0; i < number.length(); i++){
+        if( (number.charAt(i) < 48) || (number.charAt(i) > 57) ) return null;
+      }
     }
     
     return numbersStringArray;
@@ -28,6 +31,8 @@ public class Interpreter
 
   private Vector<String> createValidSubStrings(String[] arrayOfNumbersAsStrings){
     // create all substrings based on the space seperated substrings
+    
+    if(arrayOfNumbersAsStrings == null) return null;
     
     Vector<String> outputVec = new Vector<String>();
     Vector<String> phonesAll = new Vector<String>();
@@ -123,7 +128,7 @@ public class Interpreter
     return validatedPhonesAll;
   }
 
-  public void interepretApp() 
+  public Vector<String> interepretApp() 
   throws IOException 
   {
     BufferedReader reader = new BufferedReader(
@@ -135,17 +140,20 @@ public class Interpreter
     
     // Reading data using readLine
     numbersString = reader.readLine();
-    System.out.println("-------------------");
+
     String[] outputIntsAsStrings = sliceInput(numbersString);
     
-    if(outputIntsAsStrings.length == 0) return;    
+    if(outputIntsAsStrings == null) return null;    
 
     Vector<String> phonesAll = createValidSubStrings(outputIntsAsStrings);
     phonesAll = validateSubStrings(phonesAll);
     
+    return phonesAll;
+    /*
     for(int i = 0; phonesAll!=null && i<phonesAll.size(); i++){
       System.out.println(phonesAll.toArray()[i]);
     }
+    */
 
   }
 
