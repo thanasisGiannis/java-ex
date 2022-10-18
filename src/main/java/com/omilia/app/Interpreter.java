@@ -12,13 +12,12 @@ public class Interpreter
   private String[] sliceInput(String inputS){
     // chop input string into valid length substrings 
     // using space as seperation rule
+    // check for non number inputs
     if(inputS == null) return null;
     String[] numbersStringArray = null;
     numbersStringArray = inputS.split(" ");
     
     for(String number : numbersStringArray){
-      // ToDo: Check for non number related characters
-      // and discard them
       if(number.length() > 3 || number.length()<1) return null;
       for(int i=0; i < number.length(); i++){
         if( (number.charAt(i) < 48) || (number.charAt(i) > 57) ) return null;
@@ -33,6 +32,7 @@ public class Interpreter
     // create all substrings based on the space seperated substrings
     
     if(arrayOfNumbersAsStrings == null) return null;
+    if(arrayOfNumbersAsStrings.length == 0) return null;
     
     Vector<String> outputVec = new Vector<String>();
     Vector<String> phonesAll = new Vector<String>();
@@ -100,7 +100,8 @@ public class Interpreter
   }
 
   private Vector<String> validateSubStrings(Vector<String> phonesAll){
-  
+    if(phonesAll == null) {return null;}
+    if(phonesAll.size() == 0){return null;}
     Vector<String> validatedPhonesAll = new Vector<String>();
     
     for(String number : phonesAll){
@@ -124,7 +125,7 @@ public class Interpreter
     
     }
     
-    //validatedPhonesAll = new Vector<String>(phonesAll);
+    
     return validatedPhonesAll;
   }
 
@@ -146,14 +147,13 @@ public class Interpreter
     if(outputIntsAsStrings == null) return null;    
 
     Vector<String> phonesAll = createValidSubStrings(outputIntsAsStrings);
+    if(phonesAll == null) return null;
+    
     phonesAll = validateSubStrings(phonesAll);
+    if(phonesAll == null) return null;
     
     return phonesAll;
-    /*
-    for(int i = 0; phonesAll!=null && i<phonesAll.size(); i++){
-      System.out.println(phonesAll.toArray()[i]);
-    }
-    */
+    
 
   }
 
